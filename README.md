@@ -11,7 +11,7 @@ cd workable_movies_app
 ```
 3. Build docker image
 ```
-docker build --no-cache -t workable_app:0.1.0 .
+docker build --no-cache -t workable_app:0.1.1 .
 ```
 4. Run command to erase data from previous executions (optional)
 ```
@@ -25,7 +25,7 @@ docker-compose up
 ```
 docker exec -it <container_id> python -m app.database.main
 ```
-7. Open browser and type URL (or click below)
+7. Open browser and type URL (or click link)
 [Workable movies app](http://localhost:8070/)
 
 # API documentation
