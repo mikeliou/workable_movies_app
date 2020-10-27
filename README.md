@@ -13,7 +13,7 @@ cd workable_movies_app
 ```
 docker build --no-cache -t workable_app:0.1.1 .
 ```
-4. **(optional)** Run command to erase data from previous executions (data are saved locally in os)
+4. **(optional)** Erase data from previous executions (because data are saved locally in os)
 ```
 rm -rf mysql-volume/data
 ```
