@@ -13,7 +13,7 @@ cd workable_movies_app
 ```
 docker build --no-cache -t workable_app:0.1.1 .
 ```
-4. Run command to erase data from previous executions (optional)
+4. **(optional)** Run command to erase data from previous executions (data are saved locally in os)
 ```
 rm -rf mysql-volume/data
 ```
@@ -23,7 +23,7 @@ docker-compose up
 ```
 6. Create database tables
 ```
-docker exec -it <container_id> python -m app.database.main
+docker exec -it <container_id_of_workable_app> python -m app.database.main
 ```
 7. Open browser and type URL (or click link)
 [Workable movies app](http://localhost:8070/)
