@@ -48,4 +48,4 @@ docker exec -it <container_id> python -m app.database.main
 
 # Class diagram
 
-![Alt text](class_diagram/img.jpg?raw=true "Class Diagram")
+![Alt text](img/class_diagram.jpg?raw=true "Class Diagram")
