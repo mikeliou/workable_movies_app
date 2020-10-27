@@ -1,0 +1,30 @@
+version: '3.7'
+services:
+
+    mysql:
+        image: mysql:8.0.22
+        command: mysqld --default-authentication-plugin=mysql_native_password
+        environment:
+            - MYSQL_USER=user
+            - MYSQL_PASSWORD=userpass
+            - MYSQL_DATABASE=workable
+            - MYSQL_ROOT_PASSWORD=root
+        volumes:
+            - ./mysql-volume/data:/var/lib/mysql
+
+    webserver:
+        image: workable_app:0.1.1
+        restart: always
+        depends_on:
+            - mysql
+        environment:
+          - DATABASE_URL=mysql+pymysql://root:root@mysql/workable
+          - MYSQL_USER=root
+          - MYSQL_PASSWORD=root
+          - MYSQL_HOST=mysql
+          - MYSQL_DATABASE=workable
+          - SERVICE_HOSTNAME=0.0.0.0
+          - SERVICE_PORT=8080
+        ports:
+            - "8070:8080"
+        command: python -m app.main

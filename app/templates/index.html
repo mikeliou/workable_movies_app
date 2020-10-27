@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Workable movies app</title>
+    </head>
+    <body>
+        <div>
+            <div align="left">
+                <h3>Sort by: <a href="/sort_by?field=likes">Likes</a>
+                    | <a href="/sort_by?field=dislikes">Dislikes</a>
+                    | <a href="/sort_by?field=date">Date</a>
+                </h3>
+            </div>
+            <div align="right">
+                {% if user %}
+                    <div>Welcome back <a href={{"/movies/" + user.id|string }} >
+                        {{ user.first_name + ' ' + user.last_name }} </a>
+                    </div>
+                    <div>
+                        <a href="/add_movie">
+                            <button>Add movie</button>
+                        </a>
+                    </div>
+                {% else %}
+                    <div>
+                        <a href="{{ url_for('sign_up_form') }}">Sign up</a> or
+                        <a href="{{ url_for('login_form') }}">Login</a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        {% for movie in movies_data|sort(attribute=sort_field) %}
+        <div style="border:solid">
+            <p>
+                <h1>{{ movie.title }} </h1>
+            <p> {{ movie.description }} </p>
+                Posted by: <a href={{"/movies/" + movie.posted_by|string}} > {{ movie.full_name }}</a>
+                {% if movie.tdiff[0] > 0 %}
+                    {{ movie.tdiff[0] }} years ago
+                {% elif movie.tdiff[1] > 0 %}
+                    {{ movie.tdiff[1] }} months ago
+                {% elif movie.tdiff[2] > 0 %}
+                    {{ movie.tdiff[2] }} days ago
+                {% elif movie.tdiff[3] > 0 %}
+                    {{ movie.tdiff[3] }} hours ago
+                {% elif movie.tdiff[4] > 0 %}
+                    {{ movie.tdiff[4] }} minutes ago
+                {% elif movie.tdiff[1] > 0 %}
+                    {{ movie.tdiff[1] }} seconds ago
+                {% endif %}
+            </p>
+            <p>{{ movie.likes }} likes | {{ movie.dislikes }} dislikes</p>
+            <p>
+                {% set found_pref = user_preferences|selectattr("movie_id", "equalto", movie.id)|list %}
+                {% if found_pref and movie.id == found_pref[0].movie_id %}
+                        {% if found_pref[0].action_type %}
+                            You like this movie!
+                            <a href={{"/actions/remove/" + found_pref[0].id|string }}>Remove your like</a>
+                        {% else %}
+                            You dislike this movie!
+                            <a href={{"/actions/remove/" + found_pref[0].id|string }}>Remove your dislike</a>
+                        {% endif %}
+                {% else %}
+                        {% if user and movie.posted_by != user.id %}
+                                <a href={{"/actions/like/" + movie.id|string }}>Like</a>
+                                <a href={{"/actions/dislike/" + movie.id|string }}>Dislike</a>
+                        {% endif %}
+                {% endif %}
+            </p>
+            </div>
+        </div>
+        <br>
+        {% endfor %}
+    </body>
+</html>
