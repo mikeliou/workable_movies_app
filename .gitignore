@@ -1,5 +1,5 @@
 venv
 env
 .idea
-*.pyc
-.DS_Store*
+**/*.pyc
+**/.DS_Store
